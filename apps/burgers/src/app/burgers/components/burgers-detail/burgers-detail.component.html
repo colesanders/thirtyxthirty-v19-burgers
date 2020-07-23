@@ -1,0 +1,54 @@
+<mat-card class="mat-card-light"> 
+    <mat-card-header style="display: flex; justify-content: space-between;">
+      <mat-card-title class="accent">
+        <span *ngIf="burgerForm.value.id !== null; else elseBlock">
+          Editing Burger
+        </span>
+        <ng-template #elseBlock>
+          Create Burger
+        </ng-template>
+      </mat-card-title>
+      
+    </mat-card-header>
+  <form [formGroup]="burgerForm" (ngSubmit)="saved.emit(burgerForm.value)">
+    <mat-card-content>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Bun</mat-label>
+        <mat-select formControlName="bun">
+          <mat-option *ngFor="let option of bunTypes" [value]="option.value">
+            {{option.display}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Patty</mat-label>
+        <mat-select formControlName="patty">
+          <mat-option *ngFor="let option of pattyTypes" [value]="option.value">
+            {{option.display}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Cheese</mat-label>
+        <mat-select formControlName="cheese">
+          <mat-option *ngFor="let cheese of cheeseTypes" [value]="cheese.value">
+            {{cheese.display}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <thirty-mat-chip [chipList]="burgerForm.value.toppings"  (newChipList)="burgerForm.value.toppings = $event">
+      </thirty-mat-chip>
+
+    </mat-card-content>
+    <mat-card-actions style="display: flex; justify-content: space-between;">
+      <button [disabled]="burgerForm.invalid" type="submit" mat-button color="primary">Save</button>
+      <button type="button" mat-button (click)="cancelled.emit();$event.stopImmediatePropagation();cancel();">
+        Cancel
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>

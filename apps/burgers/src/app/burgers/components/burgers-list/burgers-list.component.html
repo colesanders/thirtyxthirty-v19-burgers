@@ -1,0 +1,29 @@
+<mat-card class="mat-card-light">
+    <mat-card-header>
+      <mat-card-title class="accent">
+        Burgers List
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let burger of burgers" (click)="selected.emit(burger)" style="cursor: pointer">
+          <h3 matLine> {{ burger.patty | titlecase}} Patty</h3>
+          <p matLine>
+            <span style="margin-right: 15px">
+              Bun: {{ (burger.bun | titlecase) }}  
+            </span> 
+            <span>
+              Cheese: {{ (burger.cheese | titlecase) }}
+            </span>
+          </p>
+
+          <mat-icon [svgIcon]="burger.icon" ></mat-icon>
+  
+          <button mat-icon-button color="warn" (click)="deleted.emit(burger); $event.stopImmediatePropagation()" >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+      
+    </mat-card-content>
+  </mat-card>

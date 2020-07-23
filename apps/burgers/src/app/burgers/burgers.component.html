@@ -1,0 +1,30 @@
+<div class="secondary-div">
+    <mat-toolbar class="secondary-toolbar">
+        <span>Burger List</span>
+        <div *ngIf="(burger$|async) !== undefined && (burger$|async) !== null" style="margin-left: 10px">
+            <a mat-button class="nav-link" 
+            [routerLink]="(burger$ | async).id" routerLinkActive="active">
+                <span >
+                  Burger Overview
+                </span>
+            </a>
+        </div>
+    </mat-toolbar>
+</div>
+
+<div class="burgers-containers">
+    <div class="burgers-list">
+        <thirty-burgers-list [burgers]="burgers$ | async" (selected)="select($event)" (deleted)="delete($event)">
+        </thirty-burgers-list>
+    </div>
+    <div [@openClose]="detailOpen ? 'open' : 'closed'" >
+        <thirty-burgers-detail [burger]="burger$ | async" (saved)="save($event)" (cancelled)="cancel()" 
+        (click)="focusDetail();$event.stopImmediatePropagation()" > 
+        </thirty-burgers-detail>
+    </div>
+</div>
+
+<div class="burgers-containers">
+    <router-outlet>
+    </router-outlet>
+</div>
